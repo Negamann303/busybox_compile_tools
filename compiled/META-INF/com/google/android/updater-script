@@ -1,0 +1,48 @@
+set_progress(0.00);
+
+###############################
+# Negalite WondeROM Installer
+###############################
+ui_print(" ");
+mount("ext4", "EMMC", "/dev/block/mmcblk0p24", "/system");
+run_program("/sbin/sleep", "1");
+set_progress(0.050);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# BusyBox
+###############################
+
+ui_print(" ");
+ui_print("Installing Busybox");
+package_extract_file("busybox", "/system/xbin/busybox");
+set_perm(0, 1000, 0755, "/system/xbin/busybox");
+symlink("/system/xbin/busybox", "/system/bin/busybox");
+run_program("/system/xbin/busybox", "--install", "-s", "/system/xbin");
+ui_print("Done");
+run_program("/sbin/sleep", "1");
+set_progress(0.750);
+
+###############################
+# END
+###############################
+#------------------------------
+###############################
+# Unmount Partitions
+###############################
+
+ui_print(" ");
+ui_print("Unmounting Partitions");
+unmount("/system");
+run_program("/sbin/sleep", "1");
+ui_print("Done");
+set_progress(1.0);
+ui_print(" ");
+ui_print("Install Finished");
+
+###############################
+# END
+###############################
